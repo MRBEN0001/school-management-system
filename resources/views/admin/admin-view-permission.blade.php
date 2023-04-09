@@ -56,17 +56,17 @@
                                     @else
                                     <td class="text-warning"> {{$permission->status ?? "" }}</td>
                                     @endif
-                                    <td>
+                                    <td id="actionTd">
 
                                         <button data-target="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" id="{{$permission->id}}" data-id="true" class=" approveButton btn btn-success">Approve
                                         </button>
                                         <button data-target="#collapseExample" data-toggle="collapse" id="{{$permission->id}}" class=" rejectButton btn btn-danger" data-id="false">Reject</button>
 
-                                        <form class=" .form collapse" id="collapseExample" action="/permission/{{$permission->id}}/update" method="post" style="display:non ;margin-top:1rem;" id="">
+                                        <form class=" .form collaps" id=" collapseExample" action="/permission/{{$permission->id}}/update" method="post" style="display:non ;margin-top:1rem;" id="">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" id="status" name="status" value="" class="status01">
-                                            <input type="text" name="comment" value="" id="">
+                                            <input type="text" name="comment" value="" id="commentElement">
                                             <button class="btn btn-success" type="submit">Submit</button>
                                         </form>
 
@@ -93,7 +93,10 @@
     <script>
         document.getElementById('actionButtons').addEventListener('click', function(event) {
             const permissionStatus = event.target.getAttribute('data-id');
+        
             var permissionId = event.target.getAttribute('id');
+
+
             var url = "{{ route('update-permission', ':id') }}"
             url = url.replace(':id', permissionId);
 
@@ -111,7 +114,12 @@
         });
 
 
-
+        document.querySelector(".form").addEventListener('click' ,function(event){
+    var commentElement= document.querySelector(' button #commentElement');
+    var comment = event.target.commentElement;
+            // var comment = event.target.parentNode.commentElement.getAttribute('name');
+            alert(comment)
+        });
 
 
 
