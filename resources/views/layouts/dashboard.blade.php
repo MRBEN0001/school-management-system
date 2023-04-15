@@ -140,6 +140,8 @@
                     <ul id="sidebarnav">
 
                         @if(!auth()->user()->is_admin)
+                        <li> <a class="waves-effect waves-dark" href="/dashboard" aria-expanded="false"><i class="fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                        </li>
                         <li> <a class="waves-effect waves-dark" href="/view/result/index" aria-expanded="false"><i class="fa fa-user-circle-o"></i><span class="hide-menu">View Result</span></a>
                         </li>
                         <li> 
@@ -238,7 +240,7 @@
 
             @yield('content')
 
-            <footer class="footer"> © 2021 Adminwrap by <a href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
+            <footer class="footer"> © 2023 by <a href="#">codeshrine.com</a> </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->

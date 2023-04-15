@@ -8,10 +8,10 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">view Courses</h3>
+            <h3 class="text-themecolor">view Permissions</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">view courses</li>
+                <li class="breadcrumb-item active">view Permissions</li>
             </ol>
         </div>
 
@@ -23,12 +23,20 @@
     <!-- Start Page Content -->
     <!-- ============================================================== -->
     <div class="row">
+
+    @if (session('status'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" style="color: green;">X</button>
+                {{ session('status') }}
+            </div>
+            @endif
         <!-- column -->
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <!-- <h4 class="card-title">Basic Table</h4>
                                 <h6 class="card-subtitle">Add class <code>.table</code></h6> -->
+                                
                     <div class="table-responsive">
                         <table class="table">
 
@@ -58,15 +66,22 @@
                                     @endif
                                     <td id="actionTd">
 
-                                        <button data-target="#collapseExample" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample" id="{{$permission->id}}" data-id="true" class=" approveButton btn btn-success">Approve
+                                        <button data-target="#collapseExample" data-toggle="collapse" 
+                                        role="button" aria-expanded="false" aria-controls="collapseExample" 
+                                        id="approveButton" data-id="approved"  value="approved" class="  btn btn-success">Approve
                                         </button>
-                                        <button data-target="#collapseExample" data-toggle="collapse" id="{{$permission->id}}" class=" rejectButton btn btn-danger" data-id="false">Reject</button>
 
-                                        <form class=" .form collaps" id=" collapseExample" action="/permission/{{$permission->id}}/update" method="post" style="display:non ;margin-top:1rem;" id="">
+                                        <button data-target="#collapseExample" data-toggle="collapse" 
+                                        id="RejectButton" class=" btn btn-danger" data-id="rejected">Reject</button>
+
+                                        <form onsubmit="getValue()" class=" form collaps" id=" collapseExample" action="/permission/{{$permission->id}}/update" method="post" style="display:non ;margin-top:1rem;" id="">
                                             @csrf
                                             @method('PUT')
-                                            <input type="text" id="status" name="status" value="" class="status01">
-                                            <input type="text" name="comment" value="" id="commentElement">
+
+                                        
+                                            <!-- <input type="text" id="status" name="status" value="" class="status01"> -->
+                                            <!-- <input  type="text" id="" name="permissionId" value="/permission/{{$permission->id}}/update" class=""> -->
+                                            <input type="text" name="comment" value="" id="comment">
                                             <button class="btn btn-success" type="submit">Submit</button>
                                         </form>
 
@@ -89,14 +104,19 @@
     <!-- ============================================================== -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
-"></script>
+">
+
+</script>
     <script>
         document.getElementById('actionButtons').addEventListener('click', function(event) {
-            const permissionStatus = event.target.getAttribute('data-id');
+            var permissionStatus = event.target.getAttribute('data-id');
         
             var permissionId = event.target.getAttribute('id');
-
-
+            
+        document.querySelector('.form').addEventListener('submit', function(e){
+            e.preventDefault();
+            var comment= e.target.document.querySelector('#comment').value;
+            // alert(comment);
             var url = "{{ route('update-permission', ':id') }}"
             url = url.replace(':id', permissionId);
 
@@ -106,20 +126,32 @@
                 data: {
                     "_token": $('meta[name = "csrf-token"]').attr('content'),
                     status: permissionStatus,
+                    comment:comment,
+                    
                 },
                 success: function(data) {
                     console.log(data)
                 }
             });
+
         });
 
-
-        document.querySelector(".form").addEventListener('click' ,function(event){
-    var commentElement= document.querySelector(' button #commentElement');
-    var comment = event.target.commentElement;
-            // var comment = event.target.parentNode.commentElement.getAttribute('name');
-            alert(comment)
         });
+
+//         function getValue(event) {
+//   event.preventDefault(); // prevent form submission
+//   var inputVal = document.getElementById("comment").value;
+//   alert(inputVal);
+// }
+
+
+
+    //     document.querySelector(".form").addEventListener('click' ,function(event){
+    // var commentElement= document.querySelector(' button #commentElement');
+    // var comment = event.target.commentElement;
+    //         // var comment = event.target.parentNode.commentElement.getAttribute('name');
+    //         alert(comment)
+    //     });
 
 
 

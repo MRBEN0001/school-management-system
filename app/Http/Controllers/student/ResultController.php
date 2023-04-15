@@ -12,10 +12,9 @@ use App\Models\Mark;
 class ResultController extends Controller
 {
     public function viewResultIndex(){
-        $marks = Mark::all();
-        $studentResult = Mark::where('user_id', auth()->user()->id)->get();
+        $marks = Mark::where('user_id', auth()->user()->id)->get();
         
-        return view('student.student-view-result')->with('studentResult', $studentResult)
+        return view('student.student-view-result')
         ->with('marks', $marks);
        
     }

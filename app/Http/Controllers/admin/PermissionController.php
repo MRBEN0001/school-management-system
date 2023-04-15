@@ -20,9 +20,12 @@ return view('student.student-request-permission');
         $permission->title= $request->title;
         $permission->reason= $request->reason;
        $s= $permission->save();
-        if ($s) {
-            return"Permission was submited successfully";
-        }
+       session()->flash('status', "Permission added succesfully");
+
+       return redirect('/view/permission');
+        // if ($s) {
+        //     return"Permission was submited successfully";
+        // }
     }
     public function viewPermission(){
         // $students = User::where('is_admin', false)->get();
@@ -42,7 +45,8 @@ return view('student.student-request-permission');
         // $permission->comment= $request->comment;
         // $permission->save();
         // return redirect('/view/permission/index');
-      return $request['status'] . " " . $id;
+    //   return $request['status'] . " " . $id;
+      dd("Hello!");
         
     }
 

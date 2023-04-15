@@ -17,12 +17,15 @@ class CourseController extends Controller
         return view('admin.admin-view-course')->with('courses', $courses);
     }
     public function createCourse(Request $request){
+      $courses = course::all();
         $course= new course();
+
         $course->code= $request->coursecode;
        $course->title = $request->coursetitle;
         $course->unit_load = $request->unitload;
         $s = $course->save();
-        return view("admin.admin-view-course");
+        return redirect('/view/course/index');
+        // return view("admin.admin-view-course");
         
     }
 
